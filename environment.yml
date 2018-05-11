@@ -1,0 +1,13 @@
+name: text_analytics_project
+channels:
+  - defaults
+dependencies:
+  - python
+  - nltk
+  - gensim
+  - ipykernel
+  - qt
+  - scikit-learn
+  - plotly
+  -tqdm
+
