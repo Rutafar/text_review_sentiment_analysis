@@ -23,14 +23,12 @@ def bigrm(text):
     print (*map(' '.join, bigrm), sep=', ')
 
 
-def only_nouns(data):
-    noun_list = list()
-    for text in tqdm(data):
-        tags = tag_word(text.split())
-        nouns = [word for word in text.split() if tags[word] == wordnet.NOUN]
-        noun_list.append(' '.join(nouns))
+def nouns_adverbs_adjectives(data):
+    text = ' '.join(data)
+    tags = tag_word(text.split())
+    nouns = [word for word in text.split() if tags[word] == wordnet.NOUN or tags[word]== wordnet.ADV or tags[word]== wordnet.ADJ]
 
-    return noun_list
+    return ' '.join(nouns)
 
 
 def generate_concepts(components,feature_names):

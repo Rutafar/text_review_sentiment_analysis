@@ -1,5 +1,5 @@
 from nltk.corpus import stopwords
-
+from tqdm import tqdm
 from re import IGNORECASE, DOTALL, sub, compile
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag
@@ -73,7 +73,7 @@ def tag_word(text):
     tags = pos_tag(text)
     word_categories = dict()
 
-    for word in tags:
+    for word in tqdm(tags):
         t = ' '
         tag = word[1][0]
         if tag == 'N':

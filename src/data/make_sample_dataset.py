@@ -10,23 +10,25 @@ def read_pickle_files(file):
 
 def divide(review_list):
     dataframe = pd.DataFrame(review_list)
-    print("overall 1")
-    overall_1 = dataframe[dataframe.overall == 1].sample(20000)
-    print("overall 2")
-    overall_2 = dataframe[dataframe.overall == 2].sample(20000)
-    print("overall 3")
-    overall_3 = dataframe[dataframe.overall == 3].sample(20000)
-    print("overall 4")
-    overall_4 = dataframe[dataframe.overall == 4].sample(20000)
-    print("overall 5")
-    overall_5 = dataframe[dataframe.overall == 5].sample(20000)
-    return overall_1.to_dict('records') + overall_2.to_dict('records') + overall_3.to_dict('records') \
-           + overall_4.to_dict('records') + overall_5.to_dict('records')
+    training = list()
+    testing = list()
+    for i in range(1,4):
+        print("overall " + str(i))
+        tr, te = sample_overall(dataframe,i)
+        training = training + tr
+        testing = testing + te
+
+    return training, testing
 
 
+def sample_overall(dataframe, ov):
+    overall_sample = dataframe[dataframe.overall == ov].sample(20000)
+    training = overall_sample.head(14000).to_dict('records')
+    testing = overall_sample.tail(6000).to_dict('records')
+    return training, testing
 
 
 def write_new_pickle(review_list, name):
-    with open(get_file_path("interim\\sample_" + name + ".pkl"), "wb") as f:
+    with open(get_file_path("interim\\" + name + ".pkl"), "wb") as f:
         pickle.dump(review_list, f)
 

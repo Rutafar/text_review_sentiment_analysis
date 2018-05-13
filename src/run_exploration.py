@@ -1,8 +1,10 @@
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
+from data.export_dataset import export_nouns_adj_adv
 from models.classification_model import model_bag_of_words, model_bigrams
 from datetime import datetime
 import numpy as np
-from features.explore import only_nouns
+from features.explore import nouns_adverbs_adjectives
+from features.normalize import tag_word
 
 
 def main():
@@ -18,22 +20,11 @@ def main():
     print('Taking Out comments')
     comments_training = extract_comments_from_reviews(training)
     comments_testing = extract_comments_from_reviews(testing)
+    tags_training = tag_word(' '.join(comments_training))
+    export_nouns_adj_adv(tags_training, 'tagged_words_training')
+    tags_testing = tag_word(' '.join(comments_testing))
+    export_nouns_adj_adv(tags_testing, 'tagged_words_testing')
 
-    print('Taking Out Categories')
-    categories_training = np.asarray(extract_categories_from_reviews(training))
-    categories_testing = np.asarray(extract_categories_from_reviews(testing))
-
-    print('Train with bag of words')
-    model_bag_of_words(comments_training, comments_testing, categories_training, categories_testing)
-    '''
-    print('Train with Bag Of Nouns')
-    nouns_training = only_nouns(comments_training)
-    nouns_testing = only_nouns(comments_testing)
-    model_bag_of_words(nouns_training, nouns_testing, categories_training, categories_testing)
-
-    print('Train with bag of bigrams')
-    model_bigrams(comments_training,comments_testing,categories_training,categories_testing)
-    '''
 
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]
