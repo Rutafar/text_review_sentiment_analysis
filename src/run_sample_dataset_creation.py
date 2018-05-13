@@ -7,14 +7,14 @@ def sampling():
     training = list()
     testing = list()
     for file in files:
-        print("reading file")
+        print("File: " + file)
         out = read_pickle_files(file)
         print("sampling")
         training_sample, testing_sample = divide(out)
         training = training + training_sample
         testing = testing + testing_sample
         print("to pickle")
-    print(training)
+
     write_new_pickle(training, "training")
     write_new_pickle(testing, "testing")
 

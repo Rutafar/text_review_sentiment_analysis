@@ -90,12 +90,11 @@ def tag_word(text):
 
 
 def clean(text):
-
-    text = letters_only(text)
-    text = lower_only(text)
-    text = remove_stopwords(text)
-
+    #text = remove_stopwords(text)
     text = remove_contractions(text)
+
+    text = lower_only(text)
+    text = letters_only(' '.join(text))
     text = lemmatize(text)
     return ' '.join(text)
 

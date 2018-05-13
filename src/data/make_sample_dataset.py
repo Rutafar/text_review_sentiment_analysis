@@ -12,7 +12,7 @@ def divide(review_list):
     dataframe = pd.DataFrame(review_list)
     training = list()
     testing = list()
-    for i in range(1,4):
+    for i in range(1,6):
         print("overall " + str(i))
         tr, te = sample_overall(dataframe,i)
         training = training + tr
