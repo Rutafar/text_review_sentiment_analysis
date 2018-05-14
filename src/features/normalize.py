@@ -2,9 +2,9 @@ from nltk.corpus import stopwords
 from tqdm import tqdm
 from re import IGNORECASE, DOTALL, sub, compile
 from nltk.stem import WordNetLemmatizer
-from nltk import pos_tag
+from nltk import pos_tag, sent_tokenize
 from nltk.corpus import wordnet
-from src.utils.contractions import get_contractions
+from src.utils.dictionaries import get_contractions
 
 
 def letters_only(text):
@@ -88,8 +88,11 @@ def tag_word(text):
         word_categories[word[0]] = t
     return word_categories
 
+def sentence_tokenize(text):
+    return sent_tokenize(text)
 
 def clean(text):
+
     #text = remove_stopwords(text)
     text = remove_contractions(text)
 

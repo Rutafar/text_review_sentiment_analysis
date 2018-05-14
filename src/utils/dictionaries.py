@@ -124,6 +124,14 @@ CONTRACTION_MAP = {
 "you've": "you have"
 }
 
+emoticons = \
+	[	('__EMOT_SMILEY',	[':-)', ':)', '(:', '(-:', ] )	,\
+		('__EMOT_LAUGH',		[':-D', ':D', 'X-D', 'XD', 'xD', ] )	,\
+		('__EMOT_LOVE',		['<3', ':\*', ] )	,\
+		('__EMOT_WINK',		[';-)', ';)', ';-D', ';D', '(;', '(-;', ] )	,\
+		('__EMOT_FROWN',		[':-(', ':(', '(:', '(-:', ] )	,\
+		('__EMOT_CRY',		[':,(', ':\'(', ':"(', ':(('] )	,\
+	]
 
 def get_contractions():
     return CONTRACTION_MAP

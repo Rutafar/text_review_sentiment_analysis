@@ -3,6 +3,7 @@ from data.export_dataset import export_nouns_adj_adv
 from models.classification_model import model_bag_of_words, model_bigrams
 from datetime import datetime
 import numpy as np
+from nltk import pos_tag
 from features.explore import nouns_adverbs_adjectives
 from features.normalize import tag_word
 
@@ -20,11 +21,26 @@ def main():
     print('Taking Out comments')
     comments_training = extract_comments_from_reviews(training)
     comments_testing = extract_comments_from_reviews(testing)
-    tags_training = tag_word(' '.join(comments_training))
-    export_nouns_adj_adv(tags_training, 'tagged_words_training')
+    print('Tagging training')
+    tags = pos_tag(' '.join(comments_training[0:100]).split())
+    for i in range(0, len(tags)):
+        word = tags[i]
+
+        print(tags[i])
+        print(tags[i+1][0])
+
+        print(tags[i+2])
+        print("jaififiuaufuae")
+
+    #tags_training = tag_word(' '.join(comments_training[0:100]))
+
+
+    #export_nouns_adj_adv(tags_training, 'tagged_words_training')
+    '''
+    print('Tagging testing')
     tags_testing = tag_word(' '.join(comments_testing))
     export_nouns_adj_adv(tags_testing, 'tagged_words_testing')
-
+    '''
 
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]
