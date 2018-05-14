@@ -25,3 +25,4 @@ def export_scores(scores):
 def export_nouns_adj_adv(data, filename):
     with open(get_file_path('processed\\' +filename + '.pkl'), 'wb') as f:
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
+

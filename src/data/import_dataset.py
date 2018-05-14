@@ -25,24 +25,6 @@ def import_and_divide():
 
     export_training_testing(training, testing)
 
-def import_with_overall():
-    files = get_file_names()
-    training = list()
-    testing = list()
-    for file in files:
-        with open(get_file_path('interim\\sample_' + file + '.pkl'), 'rb') as f:
-            lines = pickle.load(f)
-            df = pd.DataFrame(lines)
-            ov_1 = df[df.overall == 1 ].sample(14000)
-            df.drop(ov_1.index)
-            ov_2 = df[df.overall == 2].sample(14000)
-            df.drop(ov_2.index)
-            ov_3 = df[df.overall == 3].sample(14000)
-            df.drop(ov_3.index)
-            ov_4 = df[df.overall == 4].sample(14000)
-            df.drop(ov_4.index)
-            ov_5 = df[df.overall == 5].sample(14000)
-
 
 def import_set():
     with open(get_file_path('interim\\training.pkl'), 'rb') as f:
@@ -65,3 +47,8 @@ def import_cleaned_testing_set():
         testing = pickle.load(file)
 
     return testing
+
+
+def import_nouns_adjectives():
+    with open(get_file_path('processed\\tagged_words_training.pkl'), 'rb') as file:
+        return pickle.load(file)

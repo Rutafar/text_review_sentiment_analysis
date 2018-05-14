@@ -91,8 +91,26 @@ def tag_word(text):
 def sentence_tokenize(text):
     return sent_tokenize(text)
 
-def clean(text):
 
+def nouns_and_adjectives(sentence):
+
+    tokenized = sentence.split()
+    tags = pos_tag(tokenized)
+    u = list()
+    size = len(tags)
+    for i in range(0, len(tags)):
+        word = tags[i]
+        if word[1][0] == wordnet.ADJ:
+            u.append(word[0])
+            if i+1 <size and  tags[i+1][1][0] == wordnet.NOUN:
+                u.append([word[0], tags[i+1][0]])
+            if i+2 < size and tags[i+2][1][0] == wordnet.NOUN:
+                u.append([word[0], tags[i + 2][0]])
+
+    return u
+
+
+def clean(text):
     #text = remove_stopwords(text)
     text = remove_contractions(text)
 

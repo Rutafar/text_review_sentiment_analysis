@@ -5,7 +5,7 @@ from datetime import datetime
 import numpy as np
 from nltk import pos_tag
 from features.explore import nouns_adverbs_adjectives
-from features.normalize import tag_word
+from features.normalize import tag_word, nouns_and_adjectives
 
 
 def main():
@@ -22,35 +22,15 @@ def main():
     comments_training = extract_comments_from_reviews(training)
     comments_testing = extract_comments_from_reviews(testing)
     print('Tagging training')
-    tags = pos_tag(' '.join(comments_training[0:100]).split())
-    for i in range(0, len(tags)):
-        word = tags[i]
-
-        print(tags[i])
-        print(tags[i+1][0])
-
-        print(tags[i+2])
-        print("jaififiuaufuae")
-
+    for i in range(0,100):
+        print(nouns_and_adjectives(comments_training[i]))
     #tags_training = tag_word(' '.join(comments_training[0:100]))
-
-
     #export_nouns_adj_adv(tags_training, 'tagged_words_training')
-    '''
-    print('Tagging testing')
-    tags_testing = tag_word(' '.join(comments_testing))
-    export_nouns_adj_adv(tags_testing, 'tagged_words_testing')
-    '''
+
 
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]
     return comments_only
-
-
-def extract_categories_from_reviews(dataset):
-
-    categories_only = [review.category for review in dataset]
-    return categories_only
 
 
 def extract_for_wordcloud(dataset):
