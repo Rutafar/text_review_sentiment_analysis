@@ -49,6 +49,6 @@ def import_cleaned_testing_set():
     return testing
 
 
-def import_nouns_adjectives():
-    with open(get_file_path('processed\\tagged_words_training.pkl'), 'rb') as file:
+def import_tagged_words(name):
+    with open(get_file_path('processed\\tagged_words_' + name + '.pkl'), 'rb') as file:
         return pickle.load(file)

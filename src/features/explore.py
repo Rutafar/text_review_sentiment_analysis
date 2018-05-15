@@ -1,5 +1,6 @@
 from nltk import bigrams
 from nltk.corpus import wordnet
+from src.data.import_dataset import import_tagged_words
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from features.normalize import tag_word
 from tqdm import tqdm
@@ -23,13 +24,15 @@ def bigrm(text):
     print (*map(' '.join, bigrm), sep=', ')
 
 
-def nouns_adverbs_adjectives(data):
-    text = ' '.join(data)
-    tags = tag_word(text.split())
-    nouns = [word for word in text.split() if tags[word] == wordnet.NOUN or tags[word]== wordnet.ADV or tags[word]== wordnet.ADJ]
+def nouns_adverbs_adjectives(data, dataset):
+    wanted_words=list()
+    tagged_words = import_tagged_words(dataset)
 
-    return ' '.join(nouns)
+    for text in data:
+        wanted = [w for w in text.split() if tagged_words[w] == wordnet.NOUN or tagged_words[w]==wordnet.ADJ or tagged_words[w] == wordnet.ADV]
+        wanted_words.append(wanted)
 
+    return wanted_words
 
 def generate_concepts(components,feature_names):
     for i, comp in enumerate(components):

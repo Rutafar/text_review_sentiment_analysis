@@ -109,7 +109,6 @@ def nouns_and_adjectives(sentence):
 
     return u
 
-
 def clean(text):
     #text = remove_stopwords(text)
     text = remove_contractions(text)
