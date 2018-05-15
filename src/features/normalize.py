@@ -5,7 +5,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, sent_tokenize
 from nltk.corpus import wordnet
 from src.utils.dictionaries import get_contractions
-from data.import_dataset import import_tagged_words
+from src.data.import_dataset import import_tagged_words
 
 
 def letters_only(text):

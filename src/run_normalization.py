@@ -1,7 +1,7 @@
 from features.normalize import clean
-from data.import_dataset import import_set
+from src.data.import_dataset import import_set
 from tqdm import tqdm
-from data.export_dataset import export_dataset
+from src.data.export_dataset import export_dataset
 from review.Review import create_review_from_sample
 
 

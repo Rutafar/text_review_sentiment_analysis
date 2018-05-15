@@ -1,6 +1,6 @@
 import pickle
 from src.utils.utils import get_file_names, get_file_path
-from data.export_dataset import export_training_testing
+from src.data.export_dataset import export_training_testing
 from numpy.random import choice
 from tqdm import tqdm
 import pandas as pd
