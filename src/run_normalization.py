@@ -20,6 +20,7 @@ def clean_sets(set_to_clean):
     for review in tqdm(set_to_clean):
         text = clean(review['reviewText'])
         review['reviewText'] = text
+        
         r = create_review_from_sample(review)
         cleaned_set.add(r)
 

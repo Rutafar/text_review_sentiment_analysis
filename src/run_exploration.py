@@ -23,11 +23,9 @@ def main():
     comments_training = extract_comments_from_reviews(training)
     comments_testing = extract_comments_from_reviews(testing)
 
-    print('Tagging training')
-    export_dataset(tag_word(' '.join(comments_training)), 'tagged_words_training')
-    print('Tagging testing')
-    export_dataset(tag_word(' '.join(comments_testing)), 'tagged_words_testing')
-
+    overall_training = extract_overall_from_reviews(training)
+    overall_testing = extract_overall_from_reviews(testing)
+    model_bag_of_words(comments_training,comments_testing, overall_training, overall_testing)
     #nouns_and_adjectives(comments_training, 'training')
     '''
     overall_training = extract_overall_from_reviews(training)

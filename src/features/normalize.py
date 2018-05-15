@@ -25,7 +25,7 @@ def remove_stopwords(text):
 
 def lemmatize(text):
     lemmatizer = WordNetLemmatizer()
-    word_categories = tag_word(text.split())
+    word_categories = tag_word(text)
     lemma_list_of_words =list()
     for i in text.split():
 
@@ -75,7 +75,7 @@ def tag_word(text):
 
     word_categories = dict()
 
-    for word in tqdm(tags):
+    for word in tags:
         t = ' '
         tag = word[1][0]
         if tag == 'N':
@@ -89,6 +89,11 @@ def tag_word(text):
 
         word_categories[word[0]] = t
     return word_categories
+
+
+def remove_whitespaces(text):
+    normalized_text = sub(compile('{}'.format(r'\s+')), ' ', text)
+    return normalized_text.strip()
 
 def sentence_tokenize(text):
     return sent_tokenize(text)
@@ -113,11 +118,14 @@ def nouns_and_adjectives(sentence,dataset):
     return u
 
 def clean(text):
-    #text = remove_stopwords(text)
-    text = remove_contractions(text)
 
+    text = remove_whitespaces(text)
+    text = remove_contractions(text)
     text = lower_only(text)
     text = letters_only(' '.join(text))
+    text = remove_whitespaces(text)
+
     text = lemmatize(text)
-    return ' '.join(text)
+    text = remove_stopwords(text)
+    return text
 
