@@ -5,6 +5,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, sent_tokenize
 from nltk.corpus import wordnet
 from src.utils.dictionaries import get_contractions
+from data.import_dataset import import_tagged_words
 
 
 def letters_only(text):
@@ -70,7 +71,8 @@ JJ - adj
 
 
 def tag_word(text):
-    tags = pos_tag(text)
+    tags = pos_tag(text.split())
+
     word_categories = dict()
 
     for word in tqdm(tags):
@@ -92,17 +94,18 @@ def sentence_tokenize(text):
     return sent_tokenize(text)
 
 
-def nouns_and_adjectives(sentence):
+def nouns_and_adjectives(sentence,dataset):
 
     tokenized = sentence.split()
-    tags = pos_tag(tokenized)
+    tags = import_tagged_words(dataset)
+    print(tags)
     u = list()
     size = len(tags)
-    for i in range(0, len(tags)):
-        word = tags[i]
+    for i in range(0, len(tokenized)):
+        word = tokenized[i]
         if word[1][0] == wordnet.ADJ:
             u.append(word[0])
-            if i+1 <size and  tags[i+1][1][0] == wordnet.NOUN:
+            if i+1 < size and tags[i+1][1][0] == wordnet.NOUN:
                 u.append([word[0], tags[i+1][0]])
             if i+2 < size and tags[i+2][1][0] == wordnet.NOUN:
                 u.append([word[0], tags[i + 2][0]])
