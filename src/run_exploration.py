@@ -35,10 +35,14 @@ def main():
     n_a_adj_testing = nouns_adverbs_adjectives(comments_testing, 'testing')
 
 
-
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]
     return comments_only
+
+
+def extract_overall_from_reviews(dataset):
+    overall_only = [review.overall for review in dataset]
+    return overall_only
 
 
 def extract_for_wordcloud(dataset):
