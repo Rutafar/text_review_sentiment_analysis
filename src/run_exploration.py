@@ -8,6 +8,8 @@ from nltk import pos_tag
 from features.explore import nouns_adverbs_adjectives
 from features.normalize import tag_word, nouns_and_adjectives
 
+from visualization.visualize import plot_confusion_matrix
+
 
 def main():
     start = datetime.now()
@@ -17,30 +19,36 @@ def main():
     training = import_cleaned_training_set()
 
     print('Importing testing....')
-    #testing = import_cleaned_testing_set()
+    testing = import_cleaned_testing_set()
 
     print('Taking Out comments')
     comments_training = extract_comments_from_reviews(training)
-    #comments_testing = extract_comments_from_reviews(testing)
-
-    #overall_training = extract_overall_from_reviews(training)
-    #overall_testing = extract_overall_from_reviews(testing)
-    #model_bag_of_words(comments_training,comments_testing, overall_training, overall_testing)
-    '''
-    final_list = list()
-    tags = import_tagged_words('training')
-    for comment in tqdm(comments_training):
-        u = nouns_and_adjectives(comment, tags)
-        final_list.append(u)
-    export_dataset(final_list, 'nouns_adjectives_training')
-   '''
+    comments_testing = extract_comments_from_reviews(testing)
 
     overall_training = extract_overall_from_reviews(training)
-    #overall_testing = extract_overall_from_reviews(testing)
+    overall_testing = extract_overall_from_reviews(testing)
+
+    #conf_model = model_bag_of_words(comments_training,comments_testing, overall_training, overall_testing, 3)
+    print("------Nouns, Adverbs, Adjectives------")
     n_a_adj_training = nouns_adverbs_adjectives(comments_training, 'training')
+    n_a_adj_testing = nouns_adverbs_adjectives(comments_testing, 'testing')
+    conf_a_n_adj = model_bag_of_words(n_a_adj_training, n_a_adj_testing, overall_training, overall_testing,2)
 
-    #n_a_adj_testing = nouns_adverbs_adjectives(comments_testing, 'testing')
+    print("------Nouns and Adjectives------")
+    nouns_adj_training= nouns_and_adjectives(comments_training, 'training')
+    nouns_adj_testing = nouns_and_adjectives(comments_testing, 'testing')
+    conf_adj_noun = model_bag_of_words(nouns_adj_training, nouns_adj_testing, overall_training, overall_testing, 4)
 
+    #plot_confusion_matrix(conf_model)
+    plot_confusion_matrix(conf_a_n_adj)
+    plot_confusion_matrix(conf_adj_noun)
+    #nouns_and_adjectives(comments_training, 'training')
+    '''
+    overall_training = extract_overall_from_reviews(training)
+    overall_testing = extract_overall_from_reviews(testing)
+    n_a_adj_training = nouns_adverbs_adjectives(comments_training, 'training')
+    n_a_adj_testing = nouns_adverbs_adjectives(comments_testing, 'testing')
+    '''
 
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]

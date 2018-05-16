@@ -99,20 +99,24 @@ def sentence_tokenize(text):
     return sent_tokenize(text)
 
 
-def nouns_and_adjectives(sentence,tags):
-    tokenized = sentence.split()
-    u = list()
-    size = len(tokenized)
-    for i in range(0, len(tokenized)):
-        word = tokenized[i]
-        if tags[word] == wordnet.ADJ:
-            u.append(word)
-            if i+1 < size and tags[tokenized[i+1]] == wordnet.NOUN:
-                u.append(word + '_' +tokenized[i+1])
-            if i+2 < size and tags[tokenized[i+2]] == wordnet.NOUN:
-                u.append(word + '_' +tokenized[i + 2])
+def nouns_and_adjectives(comments, dataset_type):
+    tags = import_tagged_words(dataset_type)
+    final_list = list()
+    for sentence in tqdm(comments):
+        tokenized = sentence.split()
+        u = list()
+        size = len(tokenized)
+        for i in range(0, len(tokenized)):
+            word = tokenized[i]
+            if tags[word] == wordnet.ADJ:
+                u.append(word)
+                if i+1 < size and tags[tokenized[i+1]] == wordnet.NOUN:
+                    u.append(word + '_' +tokenized[i+1])
+                if i+2 < size and tags[tokenized[i+2]] == wordnet.NOUN:
+                    u.append(word + '_' +tokenized[i + 2])
+        final_list.append(' '.join(u))
 
-    return u
+    return final_list
 
 
 def clean(text):

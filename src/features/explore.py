@@ -31,7 +31,7 @@ def nouns_adverbs_adjectives(data, dataset):
     for text in tqdm(data):
         wanted = [w for w in text.split() if tagged_words[w] == wordnet.NOUN or tagged_words[w]==wordnet.ADJ
                   or tagged_words[w] == wordnet.ADV]
-        wanted_words.append(wanted)
+        wanted_words.append(' '.join(wanted))
 
     return wanted_words
 

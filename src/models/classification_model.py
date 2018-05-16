@@ -5,7 +5,7 @@ from features.explore import bag_of_words, tf_idf
 from sklearn import svm
 from datetime import datetime
 import numpy as np
-from visualization.visualize import plot_confusion_matrix
+from visualization.visualize import plot_confusion_matrix, display_scores
 
 
 def lsa(matrix, comppnents):
@@ -20,10 +20,11 @@ def lsa(matrix, comppnents):
 def select_features(nr_features, training_set, training_labels):
     selector = SelectKBest(k=nr_features)
     transformed_set = selector.fit_transform(training_set, training_labels)
+    #display_scores(selector.scores_)
     return selector, transformed_set
 
 
-def model_bag_of_words(training, testing, training_cat, testing_cat):
+def model_bag_of_words(training, testing, training_cat, testing_cat, k_features):
     bow_vectorizer_training, bow_features_training = bag_of_words(training)
     bow_vectorizer_testing, bow_features_testing = bag_of_words(testing)
 
@@ -33,10 +34,11 @@ def model_bag_of_words(training, testing, training_cat, testing_cat):
     ls, reduced_training = lsa(idf_train, 100)
     ls_test, reduced_testing = lsa(idf_test, 100)
 
-    selector, training_features = select_features(3, reduced_training, training_cat)
-    selector_test, testing_features = select_features(3, reduced_testing, testing_cat)
+    selector, training_features = select_features(k_features, reduced_training, training_cat)
+    selector_test, testing_features = select_features(k_features, reduced_testing, testing_cat)
 
-    train_model(training_features, training_cat, testing_features, testing_cat)
+    c = train_model(training_features, training_cat, testing_features, testing_cat)
+    return c
 
 
 def model_bigrams(comments_training, comments_testing, categories_training, categories_testing):
@@ -56,8 +58,8 @@ def model_bigrams(comments_training, comments_testing, categories_training, cate
     selector_test, s_big_t = select_features(5, ls_reduced_test_big, categories_testing)
 
     print('MODEL BIGRAMS')
-    train_model(s_big, categories_training, s_big_t, categories_testing)
-
+    c = train_model(s_big, categories_training, s_big_t, categories_testing)
+    return c
 
 def train_model(training, training_categories, test, test_categories):
     start = datetime.now()
@@ -71,10 +73,11 @@ def train_model(training, training_categories, test, test_categories):
     print(datetime.now()-start)
     print("Accuracy: " + str(accuracy_score(test_categories, predicted)))
     confusion = confusion_matrix(test_categories, predicted)
-    plot_confusion_matrix(confusion)
+    #plot_confusion_matrix(confusion)
     precision = precision_score(test_categories, predicted, average='macro')
     recall = recall_score(test_categories, predicted, average='macro')
     f_cenas = np.round((2*precision*recall)/(precision+recall),2)
     print("F Cenas " + str(f_cenas))
     print("Recall " + str(recall))
     print("Precision " + str(precision))
+    return confusion

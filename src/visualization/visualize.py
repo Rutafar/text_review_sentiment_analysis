@@ -12,6 +12,11 @@ def display_features(features, feature_names):
     df = pd.DataFrame(data=features, columns=feature_names)
     return df
 
+def display_scores(scores):
+    plt.plot(sorted(scores, key=int, reverse=True)[0:10])
+    plt.ylabel("Scores")
+    plt.xlabel("Features")
+    plt.show()
 
 def plot_confusion_matrix(confusion):
     classes = ['Automotive', 'Cell_Phones', 'Video_Games', 'Movies_and_TV']
