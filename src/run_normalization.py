@@ -9,10 +9,10 @@ def main():
     training, testing = import_set()
 
     cleaned_review_training_set = clean_sets(training)
-    export_dataset(cleaned_review_training_set, 'training')
+    export_dataset(cleaned_review_training_set, 'training_stopwords')
 
     cleaned_review_testing_set = clean_sets(testing)
-    export_dataset(cleaned_review_testing_set, 'testing')
+    export_dataset(cleaned_review_testing_set, 'testing_stopwords')
 
 
 def clean_sets(set_to_clean):

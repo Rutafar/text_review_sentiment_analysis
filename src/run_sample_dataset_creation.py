@@ -1,5 +1,6 @@
 from src.utils.utils import get_file_names
-from data.make_sample_dataset import read_pickle_files, divide, write_new_pickle
+from data.make_sample_dataset import divide, write_new_pickle
+from data.import_dataset import  read_pickle
 
 
 def sampling():
@@ -8,7 +9,7 @@ def sampling():
     testing = list()
     for file in files:
         print("File: " + file)
-        out = read_pickle_files(file)
+        out = read_pickle("raw", file)
         print("sampling")
         training_sample, testing_sample = divide(out)
         training = training + training_sample

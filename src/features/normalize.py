@@ -5,7 +5,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, sent_tokenize
 from nltk.corpus import wordnet
 from src.utils.dictionaries import get_contractions
-from src.data.import_dataset import import_tagged_words
+from src.data.import_dataset import import_tagged_words, get_stopwords
 
 
 def letters_only(text):
@@ -22,6 +22,11 @@ def remove_stopwords(text):
 
     return " ".join(no_stopwords)
 
+
+def remove_custom_stopwords(text):
+    stop = get_stopwords()
+    no_stopwords = [word for word in text if word not in stop]
+    return " ".join(no_stopwords)
 
 def lemmatize(text):
     lemmatizer = WordNetLemmatizer()
@@ -126,7 +131,7 @@ def clean(text):
     text = letters_only(' '.join(text))
     text = remove_whitespaces(text)
     text = lemmatize(text)
-    text = remove_stopwords(text)
+    text = remove_custom_stopwords(text)
     return text
 
 

@@ -1,6 +1,7 @@
 from features.lexicon import cooccurrence_matrix,cosim,cosine_similarity_matrix,format_matrix,get_sorted_vocab,get_vectors,graph_propagation,propagate
 from operator import itemgetter
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
+from src.data.export_dataset import save_lexicon_results
 from datetime import datetime
 
 def main():
@@ -19,14 +20,17 @@ def main():
     vocab = get_sorted_vocab(d)
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
+    save_lexicon_results({"cooccurrence":d, "vocabulary": vocab, "matrix":cm})
 
+
+
+def print_matrixes(vocab, d, cm):
     print("Co-occurence matrix:\n")
     print(format_matrix(vocab, d))
     print("Cosine similarity matrix:\n")
     print(format_matrix(vocab, cm))
 
-
-
+    
 def extract_comments_from_reviews(dataset):
     comments_only = [review.reviewText for review in dataset]
     return comments_only

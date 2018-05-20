@@ -123,15 +123,28 @@ CONTRACTION_MAP = {
 "you're": "you are",
 "you've": "you have"
 }
+EMOTICON_MAP = {
+':-\)': "EMOTICON_HAPPY",
+':\)' : "EMOTICON_HAPPY",
+"\(:" : "EMOTICON_HAPPY",
+"\(-:": "EMOTICON_HAPPY",
+":D" : "EMOTICON_HAPPY",
+"<3" : "EMOTICON_HAPPY",
+":-\(": "EMOTICON_SAD",	
+":\(": "EMOTICON_SAD",
+"\):": "EMOTICON_SAD",
+"\)-:":	"EMOTICON_SAD",
+":'\(": "EMOTICON_SAD",
+":/" : "EMOTICON_SAD",
+':"\(' : "EMOTICON_SAD",
+":\(\(" : "EMOTICON_SAD"
 
-emoticons = \
-	[	('__EMOT_SMILEY',	[':-)', ':)', '(:', '(-:', ] )	,\
-		('__EMOT_LAUGH',		[':-D', ':D', 'X-D', 'XD', 'xD', ] )	,\
-		('__EMOT_LOVE',		['<3', ':\*', ] )	,\
-		('__EMOT_WINK',		[';-)', ';)', ';-D', ';D', '(;', '(-;', ] )	,\
-		('__EMOT_FROWN',		[':-(', ':(', '(:', '(-:', ] )	,\
-		('__EMOT_CRY',		[':,(', ':\'(', ':"(', ':(('] )	,\
-	]
+}
+
 
 def get_contractions():
     return CONTRACTION_MAP
+
+
+def get_emoticons():
+	return EMOTICON_MAP

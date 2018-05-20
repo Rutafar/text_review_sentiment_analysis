@@ -5,6 +5,12 @@ from numpy.random import choice
 from tqdm import tqdm
 import pandas as pd
 
+from src.utils.utils import get_file_path
+
+def get_stopwords():
+    with open(get_file_path('stopwords.txt'), 'r') as f:
+        return f.read()
+
 
 def import_and_divide():
     files = get_file_names()
@@ -52,3 +58,9 @@ def import_cleaned_testing_set():
 def import_tagged_words(name):
     with open(get_file_path('processed\\tagged_words_' + name + '.pkl'), 'rb') as file:
         return pickle.load(file)
+
+
+
+def read_pickle(folder, file):
+    with open(get_file_path(folder + '\\' + file + '.pkl'), 'rb') as lines:
+        return pickle.load(lines)

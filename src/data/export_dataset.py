@@ -26,3 +26,6 @@ def export_nouns_adj_adv(data, filename):
     with open(get_file_path('processed\\' +filename + '.pkl'), 'wb') as f:
         pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
 
+def save_lexicon_results(results):
+    with open(get_file_path('lexicon.pkl'), 'wb') as f:
+        pickle.dump(results, f, pickle.HIGHEST_PROTOCOL)
