@@ -26,12 +26,13 @@ def remove_stopwords(text):
 def remove_custom_stopwords(text):
     stop = get_stopwords()
     no_stopwords = [word for word in text if word not in stop]
-    return " ".join(no_stopwords)
+    return no_stopwords
+
 
 def lemmatize(text):
     lemmatizer = WordNetLemmatizer()
     word_categories = tag_word(text)
-    lemma_list_of_words =list()
+    lemma_list_of_words = list()
     for i in text.split():
 
         word = i
@@ -45,8 +46,7 @@ def lemmatize(text):
             lem = lemmatizer.lemmatize(word, cat)
             lemma_list_of_words.append(lem)
 
-    return lemma_list_of_words
-
+    return ' '.join(lemma_list_of_words)
 
 
 def replace_emoticons(text):
@@ -55,7 +55,7 @@ def replace_emoticons(text):
     for word in text.split():
         if word in emoticon_dict.keys():
             new_string.append(emoticon_dict[word])
-            
+
         else:
             new_string.append(word)
 
@@ -71,14 +71,13 @@ def remove_contractions(normalized_text):
         first_char = match[0]
         expanded_contraction = contraction_mapping.get(match)
         if not expanded_contraction:
-            expanded_contraction =contraction_mapping.get(match.lower())
+            expanded_contraction = contraction_mapping.get(match.lower())
         expanded_contraction = first_char + expanded_contraction[1:]
         return expanded_contraction
 
     normalized_text = contractions_pattern.sub(expand_match, normalized_text)
     normalized_text = normalized_text.strip()
     return normalized_text
-
 
 
 '''
@@ -114,6 +113,7 @@ def remove_whitespaces(text):
     normalized_text = sub(compile('{}'.format(r'\s+')), ' ', text)
     return normalized_text.strip()
 
+
 def sentence_tokenize(text):
     return sent_tokenize(text)
 
@@ -129,25 +129,30 @@ def nouns_and_adjectives(comments, dataset_type):
             word = tokenized[i]
             if tags[word] == wordnet.ADJ:
                 u.append(word)
-                if i+1 < size and tags[tokenized[i+1]] == wordnet.NOUN:
-                    u.append(word + '_' +tokenized[i+1])
-                if i+2 < size and tags[tokenized[i+2]] == wordnet.NOUN:
-                    u.append(word + '_' +tokenized[i + 2])
+                if i + 1 < size and tags[tokenized[i + 1]] == wordnet.NOUN:
+                    u.append(word + '_' + tokenized[i + 1])
+                if i + 2 < size and tags[tokenized[i + 2]] == wordnet.NOUN:
+                    u.append(word + '_' + tokenized[i + 2])
         final_list.append(' '.join(u))
 
     return final_list
 
 
-def clean(text):
+def setence_tokenization(text):
+    return sent_tokenize(text)
 
-    text = remove_whitespaces(text)
+
+def clean(text):
     text = remove_contractions(text)
     text = replace_emoticons(text)
     text = lower_only(text)
-    text = letters_only(' '.join(text))
-    text = remove_whitespaces(text)
+    text = remove_whitespaces(' '.join(text))
     text = lemmatize(text)
-    text = remove_custom_stopwords(text)
+    text = sent_tokenize(text)
+    text = [remove_stopwords(sentece.split()) for sentece in text]
+    text = [letters_only(sentece) for sentece in text]
+    text = [remove_whitespaces(sentence) for sentence in text]
+
     return text
 
 
