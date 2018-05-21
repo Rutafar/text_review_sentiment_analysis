@@ -47,24 +47,20 @@ def lemmatize(text):
 
     return lemma_list_of_words
 
+
+
 def replace_emoticons(text):
-    emoticons_mapping = get_emoticons()
-    emoticons_pattern = compile('({})'.format(r'|'.join(emoticons_mapping.keys())), flags=IGNORECASE | DOTALL)
+    new_string = list()
+    emoticon_dict = get_emoticons()
+    for word in text.split():
+        if word in emoticon_dict.keys():
+            new_string.append(emoticon_dict[word])
+            
+        else:
+            new_string.append(word)
 
-    def expand_match(emoticon):
-        match = emoticon.group(0)
-        print(match)
-        first_char = match[0]
-        print(emoticons_mapping.get('<3'))
-        expanded_contraction = emoticons_mapping.get(match)
-        if not expanded_contraction:
-            expanded_contraction = emoticons_mapping.get(match.lower())
-        expanded_contraction = first_char + expanded_contraction[1:]
-        return expanded_contraction
+    return ' '.join(new_string)
 
-    normalized_text = emoticons_pattern.sub(expand_match, text)
-    normalized_text = normalized_text.strip()
-    return normalized_text
 
 def remove_contractions(normalized_text):
     contraction_mapping = get_contractions()
@@ -143,7 +139,8 @@ def nouns_and_adjectives(comments, dataset_type):
 
 
 def clean(text):
-    print(text)
+
+    text = remove_whitespaces(text)
     text = remove_contractions(text)
     text = replace_emoticons(text)
     text = lower_only(text)
