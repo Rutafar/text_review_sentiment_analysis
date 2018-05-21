@@ -30,6 +30,7 @@ def create_lexicon(corpus, name):
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
     vocab = get_sorted_vocab(d)
+    save_lexicon_results({"cooccurrence": d, "vocabulary": vocab})
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
     save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
