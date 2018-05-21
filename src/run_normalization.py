@@ -18,7 +18,9 @@ def main():
 def clean_sets(set_to_clean):
     cleaned_set = set()
     for review in tqdm(set_to_clean):
+
         text = clean(review['reviewText'])
+
         review['reviewText'] = text
         
         r = create_review_from_sample(review)

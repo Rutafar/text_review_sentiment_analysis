@@ -124,20 +124,20 @@ CONTRACTION_MAP = {
 "you've": "you have"
 }
 EMOTICON_MAP = {
-':-\)': "EMOTICON_HAPPY",
-':\)' : "EMOTICON_HAPPY",
+":-\)": "EMOTICON_HAPPY",
+":\)+" : "EMOTICON_HAPPY",
 "\(:" : "EMOTICON_HAPPY",
 "\(-:": "EMOTICON_HAPPY",
 ":D" : "EMOTICON_HAPPY",
 "<3" : "EMOTICON_HAPPY",
-":-\(": "EMOTICON_SAD",	
+":-\(": "EMOTICON_SAD",
 ":\(": "EMOTICON_SAD",
-"\):": "EMOTICON_SAD",
+"\):": "EMOTICON_SAD',
 "\)-:":	"EMOTICON_SAD",
 ":'\(": "EMOTICON_SAD",
 ":/" : "EMOTICON_SAD",
-':"\(' : "EMOTICON_SAD",
-":\(\(" : "EMOTICON_SAD"
+":\(" : "EMOTICON_SAD",
+":\(\(" : "EMOTICON_SAD",
 
 }
 

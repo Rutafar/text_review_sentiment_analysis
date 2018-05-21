@@ -10,18 +10,29 @@ def main():
 
     print('Importing training....')
     training = import_cleaned_training_set()
+    testing = import_cleaned_testing_set()
 
     print('Taking Out comments')
-    corpus = extract_comments_from_reviews(training)
+    training = extract_comments_from_reviews(training)
+    testing = extract_overall_from_reviews(testing)
+    print("-----Creating training lexicon-----")
+    create_lexicon(training, 'training')
+    print("-----Creating testing lexicon-----")
+    create_lexicon(testing, 'testing')
 
+    print(datetime.now() - start)
+
+
+
+
+def create_lexicon(corpus, name):
     print("Cooccurrence matrix")
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
     vocab = get_sorted_vocab(d)
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
-    save_lexicon_results({"cooccurrence":d, "vocabulary": vocab, "matrix":cm})
-
+    save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
 def print_matrixes(vocab, d, cm):

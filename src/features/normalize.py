@@ -4,7 +4,7 @@ from re import IGNORECASE, DOTALL, sub, compile
 from nltk.stem import WordNetLemmatizer
 from nltk import pos_tag, sent_tokenize
 from nltk.corpus import wordnet
-from src.utils.dictionaries import get_contractions
+from src.utils.dictionaries import get_contractions, get_emoticons
 from src.data.import_dataset import import_tagged_words, get_stopwords
 
 
@@ -47,6 +47,24 @@ def lemmatize(text):
 
     return lemma_list_of_words
 
+def replace_emoticons(text):
+    emoticons_mapping = get_emoticons()
+    emoticons_pattern = compile('({})'.format(r'|'.join(emoticons_mapping.keys())), flags=IGNORECASE | DOTALL)
+
+    def expand_match(emoticon):
+        match = emoticon.group(0)
+        print(match)
+        first_char = match[0]
+        print(emoticons_mapping.get('<3'))
+        expanded_contraction = emoticons_mapping.get(match)
+        if not expanded_contraction:
+            expanded_contraction = emoticons_mapping.get(match.lower())
+        expanded_contraction = first_char + expanded_contraction[1:]
+        return expanded_contraction
+
+    normalized_text = emoticons_pattern.sub(expand_match, text)
+    normalized_text = normalized_text.strip()
+    return normalized_text
 
 def remove_contractions(normalized_text):
     contraction_mapping = get_contractions()
@@ -125,8 +143,9 @@ def nouns_and_adjectives(comments, dataset_type):
 
 
 def clean(text):
-
+    print(text)
     text = remove_contractions(text)
+    text = replace_emoticons(text)
     text = lower_only(text)
     text = letters_only(' '.join(text))
     text = remove_whitespaces(text)
