@@ -43,13 +43,13 @@ def import_set():
 
 
 def import_cleaned_training_set():
-    with open(get_file_path('processed\\training_stopwords.pkl'), 'rb') as file:
+    with open(get_file_path('processed\\training_sentenced.pkl'), 'rb') as file:
         training = pickle.load(file)
 
     return training
 
 def import_cleaned_testing_set():
-    with open(get_file_path('processed\\testing_stopwords.pkl'), 'rb') as file:
+    with open(get_file_path('processed\\testing_sentenced.pkl'), 'rb') as file:
         testing = pickle.load(file)
 
     return testing

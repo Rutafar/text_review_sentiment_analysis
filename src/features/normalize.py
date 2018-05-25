@@ -26,7 +26,7 @@ def remove_stopwords(text):
 def remove_custom_stopwords(text):
     stop = get_stopwords()
     no_stopwords = [word for word in text if word not in stop]
-    return no_stopwords
+    return ' '.join(no_stopwords)
 
 
 def lemmatize(text):
@@ -149,7 +149,9 @@ def clean(text):
     text = remove_whitespaces(' '.join(text))
     text = lemmatize(text)
     text = sent_tokenize(text)
-    text = [remove_stopwords(sentece.split()) for sentece in text]
+
+    text = [remove_custom_stopwords(sentece.split()) for sentece in text]
+
     text = [letters_only(sentece) for sentece in text]
     text = [remove_whitespaces(sentence) for sentence in text]
 

@@ -15,7 +15,6 @@ def cooccurrence_matrix(corpus):
     """
     d = defaultdict(lambda : defaultdict(int))
     for text in corpus:
-        text = text.split()
         for i in range(len(text)-1):
             for j in range(i+1, len(text)):
 
