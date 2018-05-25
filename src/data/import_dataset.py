@@ -31,6 +31,9 @@ def import_and_divide():
 
     export_training_testing(training, testing)
 
+def import_lexicon_set():
+    with open(get_file_path('interim\\lexicon_dataset.pkl'), 'rb') as f:
+        return pickle.load(f)
 
 def import_set():
     with open(get_file_path('interim\\training.pkl'), 'rb') as f:
@@ -43,7 +46,7 @@ def import_set():
 
 
 def import_cleaned_training_set():
-    with open(get_file_path('processed\\training_sentenced.pkl'), 'rb') as file:
+    with open(get_file_path('processed\\lexicon_dataset.pkl'), 'rb') as file:
         training = pickle.load(file)
 
     return training

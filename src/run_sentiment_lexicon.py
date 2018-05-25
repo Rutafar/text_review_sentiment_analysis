@@ -17,20 +17,20 @@ def main():
     print('Importing training....')
     training = import_cleaned_training_set()
 
-    testing = import_cleaned_testing_set()
+    #testing = import_cleaned_testing_set()
 
     print('Taking Out comments')
     training = extract_comments_from_reviews(training)
-    testing = extract_comments_from_reviews(testing)
-    testing= sentence_to_word(testing)
+    #testing = extract_comments_from_reviews(testing)
+    #testing= sentence_to_word(testing)
     training = sentence_to_word(training)
     print('Creating Tuples')
     training_tuples = tuple(tuple(x) for x in training)
-    testing_tuples = tuple(tuple(x) for x in testing)
+    #testing_tuples = tuple(tuple(x) for x in testing)
     print("-----Creating training lexicon-----")
-    create_lexicon(training_tuples, 'training')
+    create_lexicon(training_tuples, 'lexicon_dict')
     print("-----Creating testing lexicon-----")
-    create_lexicon(testing_tuples, 'testing')
+    #create_lexicon(testing_tuples, 'testing')
 
     print(datetime.now() - start)
 
@@ -42,9 +42,9 @@ def create_lexicon(corpus, name):
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
     vocab = get_sorted_vocab(d)
-
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
+    print(cm)
     save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
