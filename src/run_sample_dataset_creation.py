@@ -1,6 +1,6 @@
 from src.utils.utils import get_file_names
-from data.make_sample_dataset import divide, write_new_pickle, divide_estupido
-from data.import_dataset import  read_pickle
+from src.data.make_sample_dataset import divide, write_new_pickle, divide_estupido
+from src.data.import_dataset import  read_pickle
 
 
 def sampling():
