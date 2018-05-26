@@ -1,5 +1,5 @@
 from features.normalize import clean
-from src.data.import_dataset import import_set
+from src.data.import_dataset import import_set, import_lexicon_set
 from tqdm import tqdm
 from src.data.export_dataset import export_dataset
 from review.Review import create_review_from_sample
@@ -7,13 +7,12 @@ import dill
 
 
 def main():
-    training, testing = import_set()
-
+    training = import_lexicon_set()
     cleaned_review_training_set = clean_sets(training)
-    export_dataset(cleaned_review_training_set, 'training_sentenced')
+    export_dataset(cleaned_review_training_set, 'lexicon_dataset')
 
-    cleaned_review_testing_set = clean_sets(testing)
-    export_dataset(cleaned_review_testing_set, 'testing_sentenced')
+    #cleaned_review_testing_set = clean_sets(testing)
+    #export_dataset(cleaned_review_testing_set, 'testing_sentenced')
 
 
 def clean_sets(set_to_clean):
