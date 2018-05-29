@@ -26,7 +26,9 @@ def main():
     #testing= sentence_to_word(testing)
     training = sentence_to_word(training)
     print('Creating Tuples')
+
     training_tuples = tuple(tuple(x) for x in training)
+
     #testing_tuples = tuple(tuple(x) for x in testing)
     print("-----Creating training lexicon-----")
     create_lexicon(training_tuples, 'lexicon_dict')
@@ -46,8 +48,14 @@ def create_lexicon(corpus, name):
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
     print("Saving")
+
+    prop = graph_propagation(cm, vocab, ["superb"], ["terrible"], 2)
+    final = list()
+    for key, val in sorted(prop.items(), key=itemgetter(1), reverse=True):
+        final.append((key, val))
+
     d = klepto.archives.dir_archive('matrix', cached=True, serialized=True)
-    d['matrix'] = cm
+    d['matrix'] = final
     d.dump()
     #save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
