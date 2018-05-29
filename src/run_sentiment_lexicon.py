@@ -1,6 +1,7 @@
 from features.lexicon import cooccurrence_matrix, cosim,cosine_similarity_matrix,format_matrix,get_sorted_vocab,get_vectors,graph_propagation,propagate
 from operator import itemgetter
 import dill as pickle
+import klepto
 from collections import defaultdict
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
 from src.data.export_dataset import save_lexicon_results
@@ -44,8 +45,11 @@ def create_lexicon(corpus, name):
     vocab = get_sorted_vocab(d)
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
-    print(cm)
-    save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
+    print("Saving")
+    d = klepto.archives.dir_archive('matrix', cached=True, serialized=True)
+    d['matrix'] = cm
+    d.dump()
+    #save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
 
