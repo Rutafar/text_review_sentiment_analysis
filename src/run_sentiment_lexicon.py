@@ -52,7 +52,6 @@ def create_lexicon(corpus, name):
     #save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
-
 def print_matrixes(vocab, d, cm):
     print("Co-occurence matrix:\n")
     print(format_matrix(vocab, d))
