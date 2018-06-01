@@ -41,6 +41,8 @@ def main():
 
 
 def create_lexicon(corpus, name):
+    positive = (open(get_file_path("positive-words.txt"), "r").read())
+    negative = (open(get_file_path("negative-words.txt"), "r").read())
     print("Cooccurrence matrix")
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
@@ -49,7 +51,7 @@ def create_lexicon(corpus, name):
     cm = cosine_similarity_matrix(vocab, d)
     print("Saving")
 
-    prop = graph_propagation(cm, vocab, ["superb"], ["terrible"], 2)
+    prop = graph_propagation(cm, vocab, positive.split(), negative.split(), 2)
     final = list()
     for key, val in sorted(prop.items(), key=itemgetter(1), reverse=True):
         final.append((key, val))
