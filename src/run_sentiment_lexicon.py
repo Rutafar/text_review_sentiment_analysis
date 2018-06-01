@@ -49,16 +49,23 @@ def create_lexicon(corpus, name):
     vocab = get_sorted_vocab(d)
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
-    print("Saving")
+    print(datetime.now())
 
+
+    print("Propagation ")
     prop = graph_propagation(cm, vocab, positive.split(), negative.split(), 2)
+
+    print(datetime.now())
     final = list()
     for key, val in sorted(prop.items(), key=itemgetter(1), reverse=True):
         final.append((key, val))
+    print(datetime.now())
+    print("Saving")
 
     d = klepto.archives.dir_archive('matrix', cached=True, serialized=True)
     d['matrix'] = final
     d.dump()
+    print(datetime.now())
     #save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
