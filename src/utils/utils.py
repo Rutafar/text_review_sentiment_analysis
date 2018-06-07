@@ -11,3 +11,7 @@ def get_file_path(filename):
 
 def get_file_names():
     return _FILE_NAMES
+
+
+def convert_dict_to_list(dictionary):
+    return [(key, value) for key, value in dictionary.items()]

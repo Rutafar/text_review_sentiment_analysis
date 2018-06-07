@@ -21,9 +21,10 @@ def export_training_testing(training, testing):
         pickle.dump(testing, file, pickle.HIGHEST_PROTOCOL)
 
 
-def export_scores(scores):
-    with open(get_file_path("scores.txt"), "w") as file:
-        file.write(scores)
+def export_to_txt(scores, name):
+    with open(get_file_path(name + ".txt"), "w") as file:
+        for t in scores:
+            file.write(' '.join(str(s) for s in t) + '\n')
 
 
 def export_nouns_adj_adv(data, filename):

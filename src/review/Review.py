@@ -20,6 +20,9 @@ class Review(object):
         self.overall = overall
 
 
+    def getreviewText(self):
+        return self.reviewText
+
 def create_review_from_sample(sample):
     review = Review(sample['reviewerID'], sample['asin'],  sample['helpful'], sample['reviewText'], sample['overall'])
 

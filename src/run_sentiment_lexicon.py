@@ -1,11 +1,11 @@
 from features.lexicon import cooccurrence_matrix, cosim,cosine_similarity_matrix,format_matrix,get_sorted_vocab,get_vectors,graph_propagation,propagate
 from operator import itemgetter
 import dill as pickle
-import klepto
 from collections import defaultdict
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
 from src.data.export_dataset import save_lexicon_results
 from datetime import datetime
+import pandas as pd
 
 
 from src.utils.utils import get_file_path
@@ -13,20 +13,19 @@ from src.utils.utils import get_file_path
 def main():
     start = datetime.now()
     print(start)
-
-
     print('Importing training....')
+    new_training = list()
     training = import_cleaned_training_set()
+    print(training)
+
 
     #testing = import_cleaned_testing_set()
 
     print('Taking Out comments')
     training = extract_comments_from_reviews(training)
-    #testing = extract_comments_from_reviews(testing)
-    #testing= sentence_to_word(testing)
     training = sentence_to_word(training)
     print('Creating Tuples')
-
+    print(len(training))
     training_tuples = tuple(tuple(x) for x in training)
 
     #testing_tuples = tuple(tuple(x) for x in testing)
@@ -36,6 +35,7 @@ def main():
     #create_lexicon(testing_tuples, 'testing')
 
     print(datetime.now() - start)
+
 
 
 
