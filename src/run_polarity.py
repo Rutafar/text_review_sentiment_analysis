@@ -20,7 +20,7 @@ def main():
 
     print("svm")
     run_model(training_matrix, testing_matrix, training_overall, testing_overall)
-    #print(polarity)
+
 
 
 def get_text_from_reviews(training, testing):

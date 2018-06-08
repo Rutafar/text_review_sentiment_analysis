@@ -3,6 +3,7 @@ from src.utils.utils import convert_dict_to_list
 from sklearn import svm
 from datetime import datetime
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score,recall_score
+from tqdm import tqdm
 
 def set_polarity(review):
     word_dictionary = GET_POLARTIY()
@@ -76,7 +77,7 @@ def create_matrix(all_words, review_list):
     word_list = extract_unique_words(all_words)
     for_svm = list()
     size = len(word_list)
-    for review in review_list:
+    for review in tqdm(review_list):
         one_review = [0] * size
         for pair in review:
             index = word_list.index(pair[0])
