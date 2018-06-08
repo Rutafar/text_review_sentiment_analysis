@@ -1,4 +1,4 @@
-from features.sentiment import set_polarity, run_model, sum_repeated
+from features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
 from data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
 from data.export_dataset import export_to_txt
 
@@ -9,15 +9,19 @@ def main():
     training_overall = extract_overall_from_reviews(training_imp)
     testing_overall = extract_overall_from_reviews(testing_imp)
     print("polarity")
-    polarity_train = [set_polarity(review) for review in training[0:100]]
-    polarity_test = [set_polarity(review) for review in testing[0:100]]
+    polarity_train = [set_polarity(review) for review in training]
+    polarity_test = [set_polarity(review) for review in testing]
     print("svm")
     without_repeat_train = sum_repeated(polarity_train)
     without_repeat_test = sum_repeated(polarity_test)
+    all_words = without_repeat_test + without_repeat_train
+    training_matrix = create_matrix(all_words, without_repeat_train)
+    testing_matrix = create_matrix(all_words, without_repeat_test)
     #print(without_repeat_train)
-    transform_train = transform_for_svm(without_repeat_train)
-    transform_test = transform_for_svm(without_repeat_test)
-    run_model(transform_train, transform_test, training_overall[0:100], testing_overall[0:100])
+    #transform_train = transform_for_svm(without_repeat_train)
+    #transform_test = transform_for_svm(without_repeat_test)
+
+    run_model(training_matrix, testing_matrix, training_overall, testing_overall)
     #print(polarity)
 
 

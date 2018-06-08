@@ -63,3 +63,24 @@ def sum_repeated(dataset):
 
     return list_without_repeat
 
+
+def extract_unique_words(list_of_tuples):
+    unique_words = set()
+    for review in list_of_tuples:
+        for pair in review:
+            unique_words.add(pair[0])
+    return sorted(list(unique_words))
+
+
+def create_matrix(all_words, review_list):
+    word_list = extract_unique_words(all_words)
+    for_svm = list()
+    size = len(word_list)
+    for review in review_list:
+        one_review = [0] * size
+        for pair in review:
+            index = word_list.index(pair[0])
+            one_review[index] = pair[1]
+
+        for_svm.append(one_review)
+    return for_svm
