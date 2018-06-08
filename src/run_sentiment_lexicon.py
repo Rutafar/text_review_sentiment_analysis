@@ -14,26 +14,14 @@ def main():
     start = datetime.now()
     print(start)
     print('Importing training....')
-    new_training = list()
     training = import_cleaned_training_set()
-    print(training)
-
-
-    #testing = import_cleaned_testing_set()
-
     print('Taking Out comments')
     training = extract_comments_from_reviews(training)
     training = sentence_to_word(training)
     print('Creating Tuples')
-    print(len(training))
     training_tuples = tuple(tuple(x) for x in training)
-
-    #testing_tuples = tuple(tuple(x) for x in testing)
     print("-----Creating training lexicon-----")
     create_lexicon(training_tuples, 'lexicon_dict')
-    print("-----Creating testing lexicon-----")
-    #create_lexicon(testing_tuples, 'testing')
-
     print(datetime.now() - start)
 
 
@@ -41,8 +29,8 @@ def main():
 
 
 def create_lexicon(corpus, name):
-    positive = (open(get_file_path("positive-words.txt"), "r").read())
-    negative = (open(get_file_path("negative-words.txt"), "r").read())
+    positive = (open(get_file_path("positive_lemmatized.txt"), "r").read())
+    negative = (open(get_file_path("negative_lemmatized.txt"), "r").read())
     print("Cooccurrence matrix")
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
@@ -50,23 +38,16 @@ def create_lexicon(corpus, name):
     print("Cosine matrix")
     cm = cosine_similarity_matrix(vocab, d)
     print(datetime.now())
-
-
     print("Propagation ")
     prop = graph_propagation(cm, vocab, positive.split(), negative.split(), 2)
-
     print(datetime.now())
     final = list()
     for key, val in sorted(prop.items(), key=itemgetter(1), reverse=True):
         final.append((key, val))
     print(datetime.now())
     print("Saving")
-
-    d = klepto.archives.dir_archive('matrix', cached=True, serialized=True)
-    d['matrix'] = final
-    d.dump()
+    save_lexicon_results(final, "lexicon_results")
     print(datetime.now())
-    #save_lexicon_results({"cooccurrence": d, "vocabulary": vocab, "matrix": cm}, name)
 
 
 def print_matrixes(vocab, d, cm):

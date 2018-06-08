@@ -38,7 +38,6 @@ def lemmatize(text):
         word = i
 
         cat = word_categories.get(word)
-
         if cat == ' ':
             lemma_list_of_words.append(word)
             continue

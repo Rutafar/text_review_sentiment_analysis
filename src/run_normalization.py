@@ -9,7 +9,7 @@ import dill
 def main():
     training = import_lexicon_set()
     cleaned_review_training_set = clean_sets(training)
-    export_dataset(cleaned_review_training_set, 'lexicon_dataset')
+    export_dataset(cleaned_review_training_set, 'lexicon_dataset_small')
 
     #cleaned_review_testing_set = clean_sets(testing)
     #export_dataset(cleaned_review_testing_set, 'testing_sentenced')
