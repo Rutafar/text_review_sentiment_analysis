@@ -1,5 +1,6 @@
 from features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
+from src.data.export_dataset import export_dataset
 
 def main():
     training_imp = import_cleaned_training_set()
@@ -15,12 +16,12 @@ def main():
     without_repeat_test = sum_repeated(polarity_test)
     print("creating matrix")
     all_words = without_repeat_test + without_repeat_train
+    export_dataset([without_repeat_train, without_repeat_test, all_words], "before_matrix")
     training_matrix = create_matrix(all_words, without_repeat_train)
     testing_matrix = create_matrix(all_words, without_repeat_test)
 
     print("svm")
     run_model(training_matrix, testing_matrix, training_overall, testing_overall)
-
 
 
 def get_text_from_reviews(training, testing):

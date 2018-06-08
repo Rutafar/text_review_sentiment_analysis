@@ -1,6 +1,7 @@
 import sys
 from collections import defaultdict
 from operator import itemgetter
+from tqdm import tqdm
 from numpy import dot, sqrt, array
 
 def cooccurrence_matrix(corpus):
@@ -117,10 +118,12 @@ def graph_propagation(cm, vocab, positive, negative, iterations):
             if w1 == w2:
                 a[w1][w2] = 1.0
     # Propagation.
+    print('propagate')
     pol_positive, a = propagate(positive, cm, vocab, a, iterations)
     pol_negative, a = propagate(negative, cm, vocab, a, iterations)
+    print('beta')
     beta = sum(pol_positive.values()) / sum(pol_negative.values())
-    for w in vocab:
+    for w in tqdm(vocab):
         pol[w] = pol_positive[w] - (beta * pol_negative[w])
     return pol
 
@@ -141,7 +144,7 @@ def propagate(seedset, cm, vocab, a, iterations):
     pol -- dictionary mapping words to un-corrected polarity scores
     a -- the updated matrix
     """
-    for w_i in seedset:
+    for w_i in tqdm(seedset):
         f = {}
         f[w_i] = True
         for t in range(iterations):

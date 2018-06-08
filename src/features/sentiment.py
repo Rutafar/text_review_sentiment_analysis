@@ -16,10 +16,11 @@ def set_polarity(review):
                 friend = False
                 if i+1<len(sentence) and sentence[i + 1] in word_dictionary :
                     final_sentence.append(score_word(sentence, word_dictionary, i, 1, score))
+                    friend=True
 
                 if i+2 < len(sentence) and sentence[i + 2] in word_dictionary:
                     final_sentence.append(score_word(sentence, word_dictionary, i, 2, score))
-
+                    friend=True
                 if not friend:
                     final_sentence.append((sentence[i] , score))
 
@@ -77,6 +78,7 @@ def create_matrix(all_words, review_list):
     word_list = extract_unique_words(all_words)
     for_svm = list()
     size = len(word_list)
+
     for review in tqdm(review_list):
         one_review = [0] * size
         for pair in review:

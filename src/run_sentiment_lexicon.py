@@ -19,7 +19,8 @@ def main():
     training = extract_comments_from_reviews(training)
     training = sentence_to_word(training)
     print('Creating Tuples')
-    training_tuples = tuple(tuple(x) for x in training)
+    training_tuples = tuple(tuple(x) for x in training[0:500])
+
     print("-----Creating training lexicon-----")
     create_lexicon(training_tuples, 'lexicon_dict')
     print(datetime.now() - start)
