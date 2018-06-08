@@ -1,6 +1,5 @@
 from features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
-from data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
-from data.export_dataset import export_to_txt
+from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
 
 def main():
     training_imp = import_cleaned_training_set()
@@ -11,16 +10,15 @@ def main():
     print("polarity")
     polarity_train = [set_polarity(review) for review in training]
     polarity_test = [set_polarity(review) for review in testing]
-    print("svm")
+    print("removing repeats")
     without_repeat_train = sum_repeated(polarity_train)
     without_repeat_test = sum_repeated(polarity_test)
+    print("creating matrix")
     all_words = without_repeat_test + without_repeat_train
     training_matrix = create_matrix(all_words, without_repeat_train)
     testing_matrix = create_matrix(all_words, without_repeat_test)
-    #print(without_repeat_train)
-    #transform_train = transform_for_svm(without_repeat_train)
-    #transform_test = transform_for_svm(without_repeat_test)
 
+    print("svm")
     run_model(training_matrix, testing_matrix, training_overall, testing_overall)
     #print(polarity)
 
