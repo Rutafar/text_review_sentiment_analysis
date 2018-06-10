@@ -33,7 +33,7 @@ def sample_overall(dataframe, ov):
 
 
 def sample_overall_stupid(dataframe, ov):
-    overall_s = dataframe[dataframe.overall == ov].sample(140).to_dict('records')
+    overall_s = dataframe[dataframe.overall == ov].sample(75).to_dict('records')
     return overall_s
 
 def write_new_pickle(review_list, name):

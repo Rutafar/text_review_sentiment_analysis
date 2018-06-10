@@ -31,7 +31,7 @@ def sampling_estupido():
         final = final + stupid
         print("to pickle")
 
-    write_new_pickle(final, "lexicon_dataset_small")
+    write_new_pickle(final, "lexicon_dataset_smaller")
 
 
 if __name__ == '__main__':

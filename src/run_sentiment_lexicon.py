@@ -19,7 +19,7 @@ def main():
     training = extract_comments_from_reviews(training)
     training = sentence_to_word(training)
     print('Creating Tuples')
-    training_tuples = tuple(tuple(x) for x in training[0:500])
+    training_tuples = tuple(tuple(x) for x in training)
 
     print("-----Creating training lexicon-----")
     create_lexicon(training_tuples, 'lexicon_dict')
@@ -30,8 +30,8 @@ def main():
 
 
 def create_lexicon(corpus, name):
-    positive = (open(get_file_path("positive_lemmatized.txt"), "r").read())
-    negative = (open(get_file_path("negative_lemmatized.txt"), "r").read())
+    positive = (open(get_file_path("positive_100.txt"), "r").read())
+    negative = (open(get_file_path("negative_100.txt"), "r").read())
     print("Cooccurrence matrix")
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
