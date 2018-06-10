@@ -46,7 +46,7 @@ def import_set():
 
 
 def import_cleaned_training_set():
-    with open(get_file_path('processed\\lexicon_dataset_smaller.pkl'), 'rb') as file:
+    with open(get_file_path('processed\\training_sentenced.pkl'), 'rb') as file:
         training = pickle.load(file)
 
     return training
@@ -64,6 +64,7 @@ def import_tagged_words(name):
 
 
 
+
 def read_pickle(folder, file):
-    with open(get_file_path(folder + '\\' + file + '.pkl'), 'rb') as lines:
+    with open(get_file_path(file + '.pkl'), 'rb') as lines:
         return pickle.load(lines)

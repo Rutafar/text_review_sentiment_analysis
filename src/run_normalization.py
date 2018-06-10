@@ -3,7 +3,7 @@ from src.data.import_dataset import import_set, import_lexicon_set
 from tqdm import tqdm
 from src.data.export_dataset import export_dataset
 from review.Review import create_review_from_sample
-import dill
+
 
 
 def main():
@@ -30,5 +30,3 @@ def clean_sets(set_to_clean):
 
 if __name__ == '__main__':
     main()
-
-

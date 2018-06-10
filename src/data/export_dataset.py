@@ -1,6 +1,6 @@
 import pickle
 from src.utils.utils import get_file_path
-import dill as pickle
+import pickle
 
 
 def export_dataset(set_to_save, name):

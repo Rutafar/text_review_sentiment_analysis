@@ -5,8 +5,8 @@ from datetime import datetime
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score,recall_score
 from tqdm import tqdm
 
-def set_polarity(review):
-    word_dictionary = GET_POLARTIY()
+def set_polarity(review, word_dictionary):
+    
     final_sentence = list()
     for sentence in review:
         sentence = sentence.split()

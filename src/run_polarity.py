@@ -1,5 +1,5 @@
-from features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
-from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set
+from src.features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
+from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set, read_pickle
 from src.data.export_dataset import export_dataset
 
 def main():
@@ -9,8 +9,10 @@ def main():
     training_overall = extract_overall_from_reviews(training_imp)
     testing_overall = extract_overall_from_reviews(testing_imp)
     print("polarity")
-    polarity_train = [set_polarity(review) for review in training]
-    polarity_test = [set_polarity(review) for review in testing]
+    word_dictionary = extract_word_dictionary()
+    polarity_train = [set_polarity(review, word_dictionary) for review in training]
+    polarity_test = [set_polarity(review, word_dictionary) for review in testing]
+    print(polarity_train)
     print("removing repeats")
     without_repeat_train = sum_repeated(polarity_train)
     without_repeat_test = sum_repeated(polarity_test)
@@ -45,6 +47,14 @@ def transform_for_svm(training):
 def extract_overall_from_reviews(dataset):
     overall_only = [review.overall for review in dataset]
     return overall_only
+
+def extract_word_dictionary():
+    lexicon =  read_pickle('', 'lexicon_results')
+    word_dictionary = dict()
+    for pair in lexicon:
+        word_dictionary[pair[0]] = pair[1]
+
+    return word_dictionary
 
 if __name__ == '__main__':
     main()
