@@ -13,6 +13,7 @@ def set_polarity(review, word_dictionary):
         for i in range(0, len(sentence)):
             if sentence[i] in word_dictionary:
                 score = word_dictionary[sentence[i]]
+
                 friend = False
                 if i+1<len(sentence) and sentence[i + 1] in word_dictionary :
                     final_sentence.append(score_word(sentence, word_dictionary, i, 1, score))
@@ -35,7 +36,6 @@ def score_word(sentence, word_dictionary, index, pad, score):
         score_tup = score * word_dictionary[sentence[index + pad]]
     else:
         score_tup = score * word_dictionary[sentence[index + pad]]
-
     return sentence[index] + "_" + sentence[index + pad], score_tup
 
 

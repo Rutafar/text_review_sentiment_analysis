@@ -1,6 +1,6 @@
 from src.features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set, read_pickle
-from src.data.export_dataset import export_dataset
+from src.data.export_dataset import export_dataset, save_lexicon_results
 
 def main():
     training_imp = import_cleaned_training_set()
@@ -12,18 +12,20 @@ def main():
     word_dictionary = extract_word_dictionary()
     polarity_train = [set_polarity(review, word_dictionary) for review in training]
     polarity_test = [set_polarity(review, word_dictionary) for review in testing]
-    print(polarity_train)
+    #print(polarity_train)
     print("removing repeats")
     without_repeat_train = sum_repeated(polarity_train)
     without_repeat_test = sum_repeated(polarity_test)
+
     print("creating matrix")
     all_words = without_repeat_test + without_repeat_train
-    export_dataset([without_repeat_train, without_repeat_test, all_words], "before_matrix")
+    #export_dataset([without_repeat_train, without_repeat_test, all_words], "before_matrix")
     training_matrix = create_matrix(all_words, without_repeat_train)
+    save_lexicon_results(training_matrix, "training_matrix")
     testing_matrix = create_matrix(all_words, without_repeat_test)
-
+    save_lexicon_results(testing_matrix, "testing_matrix")
     print("svm")
-    run_model(training_matrix, testing_matrix, training_overall, testing_overall)
+    #run_model(training_matrix, testing_matrix, training_overall, testing_overall)
 
 
 def get_text_from_reviews(training, testing):
