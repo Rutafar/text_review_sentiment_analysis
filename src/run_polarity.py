@@ -1,4 +1,4 @@
-from src.features.sentiment import set_polarity, run_model, sum_repeated, create_matrix
+from src.features.sentiment import set_polarity, run_model,extract_unique_words, sum_repeated, create_matrix, create_sparse_matrix
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set, read_pickle
 from src.data.export_dataset import export_dataset, save_lexicon_results
 
@@ -19,11 +19,14 @@ def main():
 
     print("creating matrix")
     all_words = without_repeat_test + without_repeat_train
+
     #export_dataset([without_repeat_train, without_repeat_test, all_words], "before_matrix")
-    training_matrix = create_matrix(all_words, without_repeat_train)
-    save_lexicon_results(training_matrix, "training_matrix")
-    testing_matrix = create_matrix(all_words, without_repeat_test)
-    save_lexicon_results(testing_matrix, "testing_matrix")
+
+    unique_words = extract_unique_words(all_words)
+    matrix_test = create_sparse_matrix(unique_words, without_repeat_test)
+    save_lexicon_results(matrix_test, 'testing_matrix')
+    matrix  = create_sparse_matrix(unique_words, without_repeat_train)
+    save_lexicon_results(matrix, "training_matrix")
     print("svm")
     #run_model(training_matrix, testing_matrix, training_overall, testing_overall)
 
@@ -51,12 +54,8 @@ def extract_overall_from_reviews(dataset):
     return overall_only
 
 def extract_word_dictionary():
-    lexicon =  read_pickle('', 'lexicon_results')
-    word_dictionary = dict()
-    for pair in lexicon:
-        word_dictionary[pair[0]] = pair[1]
+    return  read_pickle('', 'filtered_lexicon')
 
-    return word_dictionary
 
 if __name__ == '__main__':
     main()

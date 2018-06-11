@@ -4,9 +4,11 @@ from sklearn import svm
 from datetime import datetime
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score,recall_score
 from tqdm import tqdm
+from scipy.sparse import coo_matrix
+import  numpy as np
 
 def set_polarity(review, word_dictionary):
-    
+
     final_sentence = list()
     for sentence in review:
         sentence = sentence.split()
@@ -30,12 +32,10 @@ def set_polarity(review, word_dictionary):
 
 def score_word(sentence, word_dictionary, index, pad, score):
     score_tup = 0
-    if score < 0 and word_dictionary[sentence[index+pad]] < 0:
-        score_tup = score
-    elif word_dictionary[sentence[index + pad]]<0:
-        score_tup = score * word_dictionary[sentence[index + pad]]
+    if  word_dictionary[sentence[index + pad]]<0:
+        score_tup = score * -1
     else:
-        score_tup = score * word_dictionary[sentence[index + pad]]
+        score_tup = score
     return sentence[index] + "_" + sentence[index + pad], score_tup
 
 
@@ -86,4 +86,26 @@ def create_matrix(all_words, review_list):
             one_review[index] = pair[1]
 
         for_svm.append(one_review)
+        
     return for_svm
+
+
+def create_sparse_matrix(unique_words, dataset):
+    columns = []
+    rows = []
+    data = []
+    dataset_size = len(dataset)
+    unique_words_size = len(unique_words)
+    print(len(unique_words))
+    for i in tqdm(range(0, dataset_size)):
+        for pair in dataset[i]:
+            index = unique_words.index(pair[0])
+            columns.append(index)
+            rows.append(i)
+            data.append(pair[1])
+    data = np.asarray(data)
+    rows = np.asarray(rows)
+    columns = np.asarray(columns)
+    matrix = coo_matrix((data, (rows, columns)),shape=(dataset_size, unique_words_size))
+
+    return matrix
