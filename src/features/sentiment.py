@@ -6,26 +6,33 @@ from sklearn.metrics import accuracy_score, confusion_matrix, precision_score,re
 from tqdm import tqdm
 from scipy.sparse import coo_matrix
 import  numpy as np
+from sklearn.linear_model import SGDClassifier
 
-def set_polarity(review, word_dictionary):
 
+def set_polarity(review, word_dictionary, negative, neutral):
     final_sentence = list()
-    for sentence in review:
+    for sentence in (review):
         sentence = sentence.split()
+
         for i in range(0, len(sentence)):
+
             if sentence[i] in word_dictionary:
                 score = word_dictionary[sentence[i]]
-
                 friend = False
-                if i+1<len(sentence) and sentence[i + 1] in word_dictionary :
-                    final_sentence.append(score_word(sentence, word_dictionary, i, 1, score))
-                    friend=True
-
-                if i+2 < len(sentence) and sentence[i + 2] in word_dictionary:
-                    final_sentence.append(score_word(sentence, word_dictionary, i, 2, score))
-                    friend=True
+                if i+1 < len(sentence) and sentence[i + 1] in negative:
+                    final_sentence.append((sentence[i] + "_" + sentence[i + 1], score * -1))
+                    friend = True
+                if i +1 < len(sentence) and sentence[i + 1] in neutral:
+                    final_sentence.append((sentence[i] + "_" + sentence[i + 1], score * 0))
+                    friend = True
+                if i+2 < len(sentence) and sentence[i + 2] in negative:
+                    final_sentence.append((sentence[i] + "_" + sentence[i + 2], score * -1))
+                    friend = True
+                if i+2 < len(sentence) and sentence[i+2] in neutral:
+                    final_sentence.append((sentence[i] + "_" + sentence[i + 2], score * 0))
+                    friend = True
                 if not friend:
-                    final_sentence.append((sentence[i] , score))
+                    final_sentence.append((sentence[i], score))
 
     return final_sentence
 
@@ -40,7 +47,7 @@ def score_word(sentence, word_dictionary, index, pad, score):
 
 
 def run_model(training,testing, training_categories, testing_categories):
-    clf = svm.SVC(kernel='linear', C=1.0)
+    clf = SGDClassifier()
     print('Fitting')
     clf.fit(training, training_categories)
     print(datetime.now())
@@ -74,29 +81,12 @@ def extract_unique_words(list_of_tuples):
     return sorted(list(unique_words))
 
 
-def create_matrix(all_words, review_list):
-    word_list = extract_unique_words(all_words)
-    for_svm = list()
-    size = len(word_list)
-
-    for review in tqdm(review_list):
-        one_review = [0] * size
-        for pair in review:
-            index = word_list.index(pair[0])
-            one_review[index] = pair[1]
-
-        for_svm.append(one_review)
-        
-    return for_svm
-
-
 def create_sparse_matrix(unique_words, dataset):
     columns = []
     rows = []
     data = []
     dataset_size = len(dataset)
     unique_words_size = len(unique_words)
-    print(len(unique_words))
     for i in tqdm(range(0, dataset_size)):
         for pair in dataset[i]:
             index = unique_words.index(pair[0])

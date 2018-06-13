@@ -31,6 +31,7 @@ positive = (open(get_file_path("positive-words.txt"), "r").read())
 negative = (open(get_file_path("negative-words.txt"), "r").read())
 positive = positive.split()
 negative = negative.split()
+
 overall_1 = [review.reviewText for review in all if review.overall == 1]
 overall_5 = [review.reviewText for review in all if review.overall==5]
 
@@ -55,5 +56,3 @@ for word in sorted_d[::-1]:
 
     if word[1] > 100:
         new_negative.write(word[0] +" : " + str(word[1]) + "\n")
-
-

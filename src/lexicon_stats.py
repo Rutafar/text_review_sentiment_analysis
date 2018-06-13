@@ -9,6 +9,10 @@ import seaborn as sns
 lexicon = read_pickle('', 'lexicon_results')
 before_matrix = read_pickle('', 'before_matrix')
 
+negative = (open(get_file_path("negative-words.txt"), "r").read())
+save_lexicon_results(negative, 'negative')
+
+
 print(len(before_matrix[0]))
 
 only_values = list()
@@ -34,11 +38,13 @@ positive = 0
 negative = 0
 for word in lexicon:
 
-    if word[1]> 4 or word[1] < -4:
+    if word[1]> 4 or word[1] < -4  :
+
         if word[1] > 0 :
             positive = positive + 1
         if word[1] < 0:
             negative = negative + 1
+
         filtered_dict[word[0]] = word[1]
 
 print(len(filtered_dict))

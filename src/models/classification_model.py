@@ -2,7 +2,7 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.feature_selection import SelectKBest
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score,recall_score
 from features.explore import bag_of_words, tf_idf
-from sklearn import svm
+from sklearn.linear_model import SGDClassifier
 from datetime import datetime
 import numpy as np
 from visualization.visualize import plot_confusion_matrix, display_scores
@@ -64,7 +64,7 @@ def model_bigrams(comments_training, comments_testing, categories_training, cate
 def train_model(training, training_categories, test, test_categories):
     start = datetime.now()
     print(start)
-    clf = svm.SVC(kernel='linear', C=1.0)
+    clf = SGDClassifier()
     print('Fitting')
     clf.fit(training, training_categories)
     print(datetime.now()-start)

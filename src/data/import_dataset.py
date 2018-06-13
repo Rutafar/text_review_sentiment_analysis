@@ -11,7 +11,14 @@ def get_stopwords():
     with open(get_file_path('stopwords.txt'), 'r') as f:
         return f.read()
 
-
+def import_neutral_negative():
+    neg = ''
+    neu = ''
+    with open(get_file_path("negative.txt"), 'r') as f:
+        neg = f.read()
+    with open(get_file_path("neutral.txt"), 'r') as f:
+        neu = f.read()
+    return neg.split(), neu.split()
 def import_and_divide():
     files = get_file_names()
     training = list()

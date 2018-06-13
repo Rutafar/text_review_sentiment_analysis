@@ -30,7 +30,7 @@ def main():
 
     conf_model = model_bag_of_words(comments_training,comments_testing, overall_training, overall_testing, 3)
 
-
+    return
     print("------Nouns, Adverbs, Adjectives------")
     n_a_adj_training = nouns_adverbs_adjectives(comments_training, 'training')
     n_a_adj_testing = nouns_adverbs_adjectives(comments_testing, 'testing')
