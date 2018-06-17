@@ -16,13 +16,14 @@ def main():
     print('Importing training....')
     training = import_cleaned_training_set()
     print('Taking Out comments')
-    training = extract_comments_from_reviews(training)
-    training = sentence_to_word(training)
+    print((len(training)))
+    #training = extract_comments_from_reviews(training)
+    #training = sentence_to_word(training)
     print('Creating Tuples')
-    training_tuples = tuple(tuple(x) for x in training)
+    #training_tuples = tuple(tuple(x) for x in training)
 
     print("-----Creating training lexicon-----")
-    create_lexicon(training_tuples, 'lexicon_dict')
+    create_lexicon(training, 'lexicon_dict')
     print(datetime.now() - start)
 
 
@@ -30,8 +31,8 @@ def main():
 
 
 def create_lexicon(corpus, name):
-    positive = (open(get_file_path("positive_100.txt"), "r").read())
-    negative = (open(get_file_path("negative_100.txt"), "r").read())
+    positive = (open(get_file_path("new_positive.txt"), "r").read())
+    negative = (open(get_file_path("new_negative.txt"), "r").read())
     print("Cooccurrence matrix")
     d = cooccurrence_matrix(corpus)
     print("Sorting vocab")
@@ -47,7 +48,7 @@ def create_lexicon(corpus, name):
         final.append((key, val))
     print(datetime.now())
     print("Saving")
-    save_lexicon_results(final, "lexicon_results")
+    save_lexicon_results(final, "lexicon_results_grupo_amigo")
     print(datetime.now())
 
 

@@ -2,6 +2,8 @@ from src.features.sentiment import set_polarity, run_model,extract_unique_words,
 from src.data.import_dataset import import_cleaned_training_set, import_cleaned_testing_set, read_pickle, import_neutral_negative
 from src.data.export_dataset import export_dataset, save_lexicon_results
 from src.utils.words import GET_POLARTIY
+from src.models.classification_model import train_model
+from src.visualization.visualize import plot_confusion_matrix
 
 def main():
     training_imp = import_cleaned_training_set()
@@ -9,26 +11,40 @@ def main():
     training, testing = get_text_from_reviews(training_imp, testing_imp)
     training_overall = extract_overall_from_reviews(training_imp)
     testing_overall = extract_overall_from_reviews(testing_imp)
+
     print("polarity")
     word_dictionary = extract_word_dictionary()
-    #static_dictionary = GET_POLARTIY()
     negative, neutral =import_neutral_negative()
     print(len(word_dictionary))
     polarity_train = [set_polarity(review, word_dictionary, negative, neutral) for review in training]
     polarity_test = [set_polarity(review, word_dictionary, negative, neutral) for review in testing]
+
     print("removing repeats")
     without_repeat_train = sum_repeated(polarity_train)
     without_repeat_test = sum_repeated(polarity_test)
+
     print("creating matrix")
     all_words = without_repeat_test + without_repeat_train
     unique_words = extract_unique_words(all_words)
+
     print(len(unique_words))
     matrix_test = create_sparse_matrix(unique_words, without_repeat_test)
-    #save_lexicon_results(matrix_test, 'testing_matrix')
     matrix  = create_sparse_matrix(unique_words, without_repeat_train)
-    #save_lexicon_results(matrix, "training_matrix")
+
     print("svm")
-    run_model(matrix, matrix_test, training_overall, testing_overall)
+    c = train_model(matrix, training_overall, matrix_test, testing_overall)
+    plot_confusion_matrix(c)
+
+def convert_overall(training):
+    new_ov = list()
+    for ov in training:
+        if ov == 1 or ov == 2:
+            new_ov.append(1)
+        elif ov==4 or ov==5:
+            new_ov.append(3)
+        else:
+            new_ov.append(2)
+    return new_ov
 
 
 def get_text_from_reviews(training, testing):

@@ -59,7 +59,7 @@ def cosine_similarity_matrix(vocab, d):
     """
     cm = defaultdict(dict)
     vectors = get_vectors(d, vocab)
-    for w1 in vocab:
+    for w1 in tqdm( vocab):
         for w2 in vocab:
             cm[w1][w2] = cosim(vectors[w1], vectors[w2])
     return cm

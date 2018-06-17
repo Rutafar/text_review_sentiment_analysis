@@ -19,7 +19,7 @@ def display_scores(scores):
     plt.show()
 
 def plot_confusion_matrix(confusion):
-    classes = ['Automotive', 'Cell_Phones', 'Video_Games', 'Movies_and_TV']
+    classes = [1.0, 2.0, 3.0]
 
     confusion = confusion.astype('float') / confusion.sum(axis=1)[:, np.newaxis]
     plt.imshow(confusion, cmap=plt.cm.Blues ,interpolation='nearest' )

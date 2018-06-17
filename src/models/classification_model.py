@@ -73,7 +73,6 @@ def train_model(training, training_categories, test, test_categories):
     print(datetime.now()-start)
     print("Accuracy: " + str(accuracy_score(test_categories, predicted)))
     confusion = confusion_matrix(test_categories, predicted)
-    #plot_confusion_matrix(confusion)
     precision = precision_score(test_categories, predicted, average='macro')
     recall = recall_score(test_categories, predicted, average='macro')
     f_cenas = np.round((2*precision*recall)/(precision+recall),2)

@@ -4,41 +4,37 @@ from src.utils.utils import get_file_names, get_file_path
 from src.data.export_dataset import save_lexicon_results
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+from src.utils.words import GET_POLARTIY
 
 lexicon = read_pickle('', 'lexicon_results')
-before_matrix = read_pickle('', 'before_matrix')
-
-negative = (open(get_file_path("negative-words.txt"), "r").read())
-save_lexicon_results(negative, 'negative')
 
 
-print(len(before_matrix[0]))
+hu = GET_POLARTIY()
 
-only_values = list()
-unique_words = set()
+only_values_hu = list()
+for key, value in hu.items():
+    only_values_hu.append(value)
+
+
+
+lexicon_dict = dict()
+
 for pair in lexicon:
-    only_values.append(pair[1])
+    lexicon_dict[pair[0]] = pair[1]
 
+for key, value in hu.items():
+    if key in lexicon_dict and lexicon_dict[key] > 0 and value < 0:
+        print(key)
+        print(value)
+        print(lexicon_dict[key])
 
-only_values = sorted(only_values)
-print(only_values)
-plt.plot(only_values)
-plt.show()
-only_values = [i for i in only_values if i >2 or i < -2]
-sns.distplot(only_values)
-
-
-filtered = [number for number in only_values if number >4 or number < -4]
-print(len(filtered))
-save_lexicon_results(filtered, "filtered_lexicon")
-
+'''
 filtered_dict = dict()
 positive = 0
 negative = 0
 for word in lexicon:
 
-    if word[1]> 4 or word[1] < -4  :
+    if word[1]> 1 or word[1] < -1:
 
         if word[1] > 0 :
             positive = positive + 1
@@ -50,4 +46,5 @@ for word in lexicon:
 print(len(filtered_dict))
 print(positive)
 print(negative)
-save_lexicon_results(filtered_dict, 'filtered_lexicon')
+save_lexicon_results(filtered_dict, 'filtered_lexicon5000')
+'''
